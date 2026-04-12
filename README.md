@@ -225,4 +225,12 @@ grep -rEo 'https?://[a-zA-Z0-9./_-]+' js_output/ | sort -u
 
 ## License
 
-MIT
+This project is licensed under the MIT License.  
+See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Author
+
+**Shaikh Khizer**  
+Computer Science Student | Penetration Tester
