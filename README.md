@@ -45,6 +45,7 @@ jsfetch -u <URL> [options]
 | Flag | Default | Description |
 |------|---------|-------------|
 | `-u <url>` | — | Target page URL **(required)** |
+| `-accept-status` | 200-299 | Download only if page status is in this range | 
 | `-o <dir>` | `js_output` | Output directory for downloaded files |
 | `-H 'Key: Value'` | — | Custom header, repeatable |
 | `-ua <string>` | Mozilla/5.0 ... | User-Agent string |
