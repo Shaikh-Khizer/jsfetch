@@ -20,8 +20,8 @@ A fast, header-aware JavaScript file downloader for web pages. Give it a URL and
 ## Build
 
 ```bash
-git clone <your-repo>
-cd jsfetch
+git clone https://github.com/Shaikh-Khizer/jsfetch.git
+cd jsfetch/jsfetch
 go mod init jsfetch
 go get golang.org/x/net/html
 go build -o jsfetch .
