@@ -40,20 +40,57 @@ mv jsfetch /usr/local/bin/
 jsfetch -u <URL> [options]
 ```
 
-### Options
+## CLI Options
+### Core Options:
+| Flag              | Description                               | Default        |
+| ----------------- | ----------------------------------------- | -------------- |
+| `-u <url>`        | Target page URL (required)                | —              |
+| `-o <dir>`        | Output directory to save downloaded files | `js_output`    |
+| `-H 'Key: Value'` | Custom header (repeatable)                | —              |
+| `-ua <string>`    | User-Agent string                         | Mozilla/5.0... |
+| `-t <seconds>`    | HTTP timeout                              | `45`           |
+| `-X <method>`     | HTTP method for page request              | `GET`          |
+| `-p <proxy>`      | Proxy URL (HTTP/SOCKS5)                   | —              |
 
-| Flag | Default | Description |
-|------|---------|-------------|
-| `-u <url>` | — | Target page URL **(required)** |
-| `-accept-status` | 200-299 | Download only if page status is in this range | 
-| `-o <dir>` | `js_output` | Output directory for downloaded files |
-| `-H 'Key: Value'` | — | Custom header, repeatable |
-| `-ua <string>` | Mozilla/5.0 ... | User-Agent string |
-| `-t <seconds>` | `45` | HTTP timeout in seconds |
-| `-c <workers>` | `1` | Concurrent download workers |
-| `--list-only` | off | Print JS URLs only, no download |
-| `--inline` | off | Also save inline `<script>` blocks |
-| `--silent` | off | Suppress all logs, clean output |
+### Download Options:
+| Flag                      | Description                       | Default   |
+| ------------------------- | --------------------------------- | --------- |
+| `-c <workers>`            | Concurrent download workers       | `1`       |
+| `--rate <ms>`             | Delay between requests per worker | `0`       |
+| `--retry <n>`             | Retries on failed downloads       | `2`       |
+| `--accept-status <range>` | Accept page status range          | `200-299` |
+
+### Skip / Filter Options:
+| Flag                   | Description                                 | Default |
+| ---------------------- | ------------------------------------------- | ------- |
+| `--no-skip`            | Disable built-in CDN/library skip list      | Enabled |
+| `--skip-domain <host>` | Extra domain to skip (repeatable)           | —       |
+| `--skip-pat <pattern>` | Extra filename pattern to skip (repeatable) | —       |
+
+### Output / Display Options: 
+| Flag          | Description                             | Default  |
+| ------------- | --------------------------------------- | -------- |
+| `--list-only` | Print discovered URLs only, no download | Disabled |
+| `--inline`    | Save inline `<script>` blocks           | Disabled |
+| `--silent`    | Suppress logs (clean output)            | Disabled |
+
+## Built-in Skip List
+| Domains                      |
+| ---------------------------- |
+| jsdelivr, cdnjs, unpkg       |
+| googleapis, googletagmanager |
+| bootstrapcdn, fontawesome    |
+| cloudflareinsights, segment  |
+| intercom, facebook, twitter  |
+| linkedin, sentry             |
+
+## Patterns
+| Patterns                    |
+| --------------------------- |
+| jquery, react, vue, angular |
+| bootstrap, lodash, moment   |
+| axios, popper, tailwind     |
+| polyfill, core-js, gtm      |
 
 ---
 
