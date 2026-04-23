@@ -14,19 +14,19 @@ import (
 // - optional keep-alive disabling (for debugging / proxy visibility)
 func newHTTPClient(timeoutSecs int, proxyURL *url.URL, insecure bool) *http.Client {
 	transport := &http.Transport{
-		// 🔥 Disable HTTP/2 (important for Burp/ZAP visibility)
+		// Disable HTTP/2 (important for Burp/ZAP visibility)
 		ForceAttemptHTTP2: false,
 
-		// 🔥 TLS config (supports -k)
+		//  TLS config (supports -k)
 		TLSClientConfig: &tls.Config{
 			InsecureSkipVerify: insecure,
 		},
 
-		// 🔥 Disable connection reuse so every request hits proxy visibly
+		//  Disable connection reuse so every request hits proxy visibly
 		DisableKeepAlives: true,
 	}
 
-	// 🔥 Force proxy for ALL requests (page + JS + redirects)
+	//  Force proxy for ALL requests (page + JS + redirects)
 	if proxyURL != nil {
 		transport.Proxy = func(req *http.Request) (*url.URL, error) {
 			return proxyURL, nil
