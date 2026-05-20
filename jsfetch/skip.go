@@ -83,9 +83,9 @@ var defaultSkipPatterns = []string{
 	"polyfill.",
 	"core-js",
 	"regenerator-runtime",
-	"gtm.",        // Google Tag Manager
-	"ga.",         // Google Analytics slim builds
-	"fbevents.",   // Facebook Pixel
+	"gtm.",
+	"ga.",
+	"fbevents.",   
 	"recaptcha",
 	"sentry.",
 	"amplitude.",
