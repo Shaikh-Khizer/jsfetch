@@ -153,8 +153,6 @@ func main() {
 		os.Exit(1)
 	}
 	pageHTML := string(bodyBytes)
-	// Use the final request URL (correct after any server-side rewriting),
-	// not the raw user-supplied string.
 	baseURL := resp.Request.URL
 
 	// ── Step 2: Extract external JS ───────────────────────────────────────────
