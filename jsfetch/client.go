@@ -8,30 +8,16 @@ import (
 	"time"
 )
 
-// newHTTPClient creates an HTTP client with:
-// - optional proxy
-// - optional TLS verification bypass (-k)
-// - optional redirect following (-r)
-// - optional keep-alive disabling (for debugging / proxy visibility)
+
 func newHTTPClient(timeoutSecs int, proxyURL *url.URL, insecure bool, followRedirects bool) *http.Client {
 	transport := &http.Transport{
-		// 🔥 Disable HTTP/2 (important for Burp/ZAP visibility)
 		ForceAttemptHTTP2: false,
-
-		// 🔥 TLS config (supports -k)
 		TLSClientConfig: &tls.Config{
 			InsecureSkipVerify: insecure,
 		},
-
-		// 🔥 Disable connection reuse so every request hits proxy visibly
 		DisableKeepAlives: true,
-
-		// 🔥 Disable implicit HTTP_PROXY / HTTPS_PROXY env fallback;
-		//    proxy is only used when -p is explicitly passed.
 		Proxy: nil,
 	}
-
-	// 🔥 Force proxy for ALL requests (page + JS + redirects)
 	if proxyURL != nil {
 		transport.Proxy = func(req *http.Request) (*url.URL, error) {
 			return proxyURL, nil
@@ -42,7 +28,7 @@ func newHTTPClient(timeoutSecs int, proxyURL *url.URL, insecure bool, followRedi
 		return http.ErrUseLastResponse
 	}
 	if followRedirects {
-		checkRedirect = nil // use Go's default (follow up to 10)
+		checkRedirect = nil
 	}
 
 	return &http.Client{
@@ -52,7 +38,6 @@ func newHTTPClient(timeoutSecs int, proxyURL *url.URL, insecure bool, followRedi
 	}
 }
 
-// parseHeaders converts a slice of "Key: Value" strings into a map.
 func parseHeaders(raw []string) map[string]string {
 	out := make(map[string]string, len(raw))
 	for _, h := range raw {
@@ -64,10 +49,6 @@ func parseHeaders(raw []string) map[string]string {
 	return out
 }
 
-// requestBuilder builds HTTP requests with:
-// - custom method
-// - user-agent
-// - additional headers
 func requestBuilder(method, userAgent string, headers map[string]string) func(string) (*http.Request, error) {
 	return func(u string) (*http.Request, error) {
 		req, err := http.NewRequest(method, u, nil)
@@ -85,7 +66,6 @@ func requestBuilder(method, userAgent string, headers map[string]string) func(st
 	}
 }
 
-// fetchWithRetry performs request with retry logic.
 func fetchWithRetry(
 	client *http.Client,
 	buildReq func(string) (*http.Request, error),
