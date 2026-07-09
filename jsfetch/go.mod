@@ -1,4 +1,4 @@
-module jsfetch
+module github.com/khiz3r/jsfetch
 
 go 1.26.1
 
